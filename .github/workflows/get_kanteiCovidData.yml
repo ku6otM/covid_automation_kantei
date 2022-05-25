@@ -1,0 +1,34 @@
+name: Flat
+
+on:
+  push:
+    paths:
+      - .github/workflows/get_kanteiCovidData.yml # Only run a new workflow every time this file (flat.yaml) file changes
+  workflow_dispatch: # Required even though this is currently empty
+  schedule:
+    - cron: '0 19 * * *' # See https://crontab.guru/
+
+jobs:
+  scheduled:
+    runs-on: ubuntu-latest
+    steps: # This workflow has 3 steps
+      # Get UTC time 
+      - name: Get Time
+        id: time
+        run: echo "::set-output name=time::$(date +'%Y-%m-%d')"
+      # The first step is to check out the repository so it can read the files inside of it and do other operations
+      - name: Check out repo
+        uses: actions/checkout@v2
+      # This step installs Deno, which is a new Javascript runtime that improves on Node. We'll use it for postprocessing later
+      - name: Setup deno
+        uses: denoland/setup-deno@main
+        with:
+          deno-version: v1.x
+      # The third step is a Flat Action step. We fetch the data in the http_url and save it as downloaded_filename
+      # Sleep some seconds
+      - run: sleep 20
+      - name: Fetch data
+        uses: githubocto/flat@v2
+        with:
+          http_url: https://www.kantei.go.jp/jp/content/kenbetsu_nenreikaikyubetsu-booster_data.xlsx
+          downloaded_filename: kantei/${{ steps.time.outputs.time }}_kenbetsu_nenreikaikyubetsu-booster_data.xlsx
