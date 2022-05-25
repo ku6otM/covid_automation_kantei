@@ -31,4 +31,4 @@ jobs:
         uses: githubocto/flat@v2
         with:
           http_url: https://www.kantei.go.jp/jp/content/kenbetsu_nenreikaikyubetsu-booster_data.xlsx
-          downloaded_filename: kantei/${{ steps.time.outputs.time }}_kenbetsu_nenreikaikyubetsu-booster_data.xlsx
+          downloaded_filename: /kantei/${{ steps.time.outputs.time }}_kenbetsu_nenreikaikyubetsu-booster_data.xlsx
