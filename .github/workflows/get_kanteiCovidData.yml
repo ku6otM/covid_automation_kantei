@@ -26,9 +26,8 @@ jobs:
           deno-version: v1.x
       # The third step is a Flat Action step. We fetch the data in the http_url and save it as downloaded_filename
       # Sleep some seconds
-      - run: sleep 20
       - name: Fetch data
         uses: githubocto/flat@v2
         with:
           http_url: https://www.kantei.go.jp/jp/content/kenbetsu_nenreikaikyubetsu-booster_data.xlsx
-          downloaded_filename: /kantei/${{ steps.time.outputs.time }}_kenbetsu_nenreikaikyubetsu-booster_data.xlsx
+          downloaded_filename: ${{ steps.time.outputs.time }}_kenbetsu_nenreikaikyubetsu-booster_data.xlsx
